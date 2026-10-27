@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Конвейер Цифровых Кирпичей 🧱</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; background: #f5f6fa; color: #2f3640; text-align: center; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        button { padding: 12px 24px; background: #4cd137; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        button:hover { background: #44bd32; }
+        textarea { width: 100%; height: 200px; margin-top: 20px; font-family: monospace; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🤖 Конвейер Запущен</h2>
+    <p>Нажмите кнопку ниже, чтобы выпечь 5 новых HTML-страниц для вашей цифровой печи.</p>
+    <button onclick="bakeBricks()">Выпечь новые кирпичи ✨</button>
+    <div id="output" style="margin-top:20px; text-align:left; font-size:14px; color:#7f8c8d;"></div>
+</div>
+
+<script>
+const HTML_TEMPLATE = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} — Готовый HTML код</title>
+    <style>
+        body {{ font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; background: #f5f6fa; color: #2f3640; }}
+        .box {{ background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }}
+        h1 {{ color: #1e272e; font-size: 28px; margin-bottom: 5px; }}
+        pre {{ background: #2f3542; color: #f1f2f6; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 14px; }}
+        .ad-slot {{ background: #ffeaa7; border: 2px dashed #eccc68; padding: 20px; text-align: center; margin: 25px 0; font-weight: bold; border-radius: 8px; color: #2f3542; }}
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>{title}</h1>
+    <p style="color: #718093;">Быстрое и готовое решение для вашего сайта.</p>
+    <div class="ad-slot">
+        💰 РЕКЛАМНЫЙ БАННЕР (Приносит доход за каждый просмотр этой страницы)
+    </div>
+    <h3>📚 Решение:</h3>
+    <p>{description}</p>
+    <pre><code>{code}</code></pre>
+    <p style="margin-top: 30px; font-size: 13px; color: #a4b0be;">Вы можете бесплатно скопировать этот материал. <a href="index.html">На главную</a></p>
+</div>
+</body>
+</html>`;
+
+const BRICKS_DATA = [
+    { url: "kak-sdelat-zhirnyj-shrift.html", title: "Как сделать жирный шрифт в HTML", desc: "Для создания жирного текста используйте тег strong или b.", code: "<strong>Этот текст будет жирным</strong>" },
+    { url: "kak-vstavit-kartinku.html", title: "Как вставить картинку в HTML код", desc: "Картинка вставляется с помощью одиночного тега img и атрибута src.", code: '<img src="image.jpg" alt="Описание" width="300">' },
+    { url: "kak-sdelat-ssylku.html", title: "Как сделать ссылку в HTML", desc: "Ссылки создаются с помощью тега a и обязательного атрибута href.", code: '<a href="https://google.com" target="_blank">Перейти в Google</a>' },
+    { url: "kak-sdelat-tablicu.html", title: "Как создать простую таблицу в HTML", desc: "Таблица строится из тегов table, tr (строка) и td (ячейка).", code: "<table>\\n  <tr>\\n    <td>Ячейка 1</td>\\n    <td>Ячейка 2</td>\\n  </tr>\\n</table>" },
+    { url: "kak-sdelat-spisok.html", title: "Как сделать маркированный список в HTML", desc: "Маркированный список создается тегом ul, а элементы — тегом li.", code: "<ul>\\n  <li>Первый пункт</li>\\n  <li>Второй пункт</li>\\n</ul>" }
+];
+
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
+
+function bakeBricks() {
+    let out = document.getElementById('output');
+    out.innerHTML = "<b>Выпекаем файлы:</b><br>";
+    
+    BRICKS_DATA.forEach(brick => {
+        let content = HTML_TEMPLATE
+            .replace(/{title}/g, brick.title)
+            .replace(/{description}/g, brick.desc)
+            .replace(/{code}/g, brick.code);
+            
+        download(brick.url, content);
+        out.innerHTML += `✅ Подготовлен файл: <b>${brick.url}</b><br>`;
+    });
+    out.innerHTML += "<br>🎉 Браузер скачал файлы. Теперь просто загрузите их в ваш GitHub репозиторий!";
+}
+</script>
+</body>
+</html>
